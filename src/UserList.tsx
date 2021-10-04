@@ -7,55 +7,6 @@ import {
   GridCellValue
 } from "@material-ui/data-grid";
 
-
-const columns: GridColDef[] = [
-    {
-        field: "id",
-        headerName: "ID",
-
-    },
-    {
-        field: 'name',
-        headerName: 'Name',
-        editable: true,
-    },
-    {
-        field: 'username',
-        headerName: 'Username',
-        editable: true,
-    },
-    {
-        field: 'email',
-        headerName: 'Email',
-        type: 'string',
-        editable: true,
-    },
-    {
-        field: "",
-        headerName: "Button",
-        sortable: false,
-        width: 100,
-        renderCell: (params) => {
-          const onClick = () => {
-            const api: GridApi = params.api;
-            const fields = api
-              .getAllColumns()
-              .map(c => c.field)
-              .filter(c => c !== "__check__" && !!c);
-            const thisRow: Record<string, GridCellValue> = {};
-    
-            fields.forEach(field => {
-              thisRow[field] = params.getValue(params.id, field);
-            });
-    
-            return alert(JSON.stringify(thisRow, null, 4));
-          };
-    
-          return <Button onClick={onClick}>show info</Button>;
-        }
-      },
-];
-
 const rows = [
     {
         "id": 1,
@@ -288,6 +239,64 @@ const rows = [
         }
     }
 ]
+
+
+const columns: GridColDef[] = [
+    {
+        field: "id",
+        headerName: "ID",
+
+    },
+    {
+        field: 'name',
+        headerName: 'Name',
+        editable: true,
+    },
+    {
+        field: 'username',
+        headerName: 'Username',
+        editable: true,
+    },
+    {
+        field: 'email',
+        headerName: 'Email',
+        type: 'string',
+        editable: true,
+    },
+    {
+        field: "",
+        headerName: "Button",
+        sortable: false,
+        width: 100,
+        renderCell: (params) => {
+          const onClick = () => {
+            const api: GridApi = params.api;
+            const fields = api
+              .getAllColumns()
+              .map(c => c.field)
+              .filter(c => c !== "__check__" && !!c);
+            const thisRow: Record<string, GridCellValue> = {};
+    
+            fields.forEach(field => {
+              thisRow[field] = params.getValue(params.id, field);
+            });
+
+            let answer = "";
+
+            for(let i = 0; i < rows.length; i++) {
+                if (rows[i].id === params.id) {
+                    answer = JSON.stringify(rows[i].address,null, 4) + JSON.stringify(rows[i].company, null, 4);
+                }
+            }
+            return alert(answer);
+          };
+    
+          return <Button onClick={onClick}>show info</Button>;
+        }
+      },
+];
+
+
 
 
  function UserList() {
